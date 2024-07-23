@@ -1,2 +1,2 @@
-# semiconductors
+# Semiconductors
 Data Visualisation  
