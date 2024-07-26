@@ -1,0 +1,56 @@
+
+/* * means target every element */
+*{
+    background-color: aliceblue;
+    color: rgb(66, 66, 66);
+}
+
+
+body
+{
+    margin:50px;
+    font-family: Georgia, serif;
+    color:rgb(76, 10, 89);
+}
+
+.bar
+{
+    display: flex;
+    justify-content: space-between;
+    outline: 1px dashed blue;
+    padding-bottom: 20px;
+    margin: 20px;
+}
+
+h1, h2 {
+   
+    height: 50px;
+    width: auto;
+    text-align: left;
+    color: rgb(87, 32, 196);
+    /* font-style: normal; */
+    padding: .5rem;
+    
+}
+
+.nav-items
+{
+    display: flex;
+
+}
+
+.nav-items li {
+    padding: 10px;
+    list-style-type: none;
+}
+
+img {
+ 
+    width: 100%;
+    aspect-ratio: 2/1;
+}
+
+a{
+    color:rgb(76, 10, 89)
+}
+
