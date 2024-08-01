@@ -56,12 +56,12 @@ function success(pos) {
         .then(data => {
             const pincode = data.address.postcode;
             const shortCode = generateShortCode(pincode, lat, lng);
-            const tooltipContent = `<b>Geo-Pincode</b><br>Latitude: ${lat}<br>Longitude: ${lng}<br>Unique Short Code: ${shortCode}`;
+            const tooltipContent = `<b>Geo-Pincode</b><br>Pincode: ${pincode}<br>Latitude: ${lat}<br>Longitude: ${lng}<br>Unique Short Code: ${shortCode}`;
             marker.bindTooltip(tooltipContent).openTooltip();
         })
         .catch(error => {
             const shortCode = generateShortCode("Unknown", lat, lng);
-            const tooltipContent = `<b>Geo-Pincode</b><br>Latitude: ${lat}<br>Longitude: ${lng}<br>Unique Short Code: ${shortCode}`;
+            const tooltipContent = `<b>Geo-Pincode</b><br>Pincode: Unknown<br>Latitude: ${lat}<br>Longitude: ${lng}<br>Unique Short Code: ${shortCode}`;
             marker.bindTooltip(tooltipContent).openTooltip();
         });
     // Fetches the pincode using reverse geocoding and adds it to the tooltip with formatted content
@@ -90,7 +90,7 @@ function generateShortCode(pincode, lat, lng) {
     // Take the last four digits of the latitude and longitude
     const latStr = lat.toString().split('.').join('').slice(-4);
     const lngStr = lng.toString().split('.').join('').slice(-4);
-    const shortCode = `${pincode} ${latStr} ${lngStr}`;
+    const shortCode = `${pincode}-${latStr}-${lngStr}`;
     return shortCode;
 }
 
