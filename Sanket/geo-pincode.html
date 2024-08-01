@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <style> 
+        #map { height: 500px; width: 720px; align-items: center;}
+        
+    </style>
+
+</head>
+
+<body>
+    Map of User Location Bangalore
+    <div id="map"></div>
+
+</body>
+<script>
+    var map = L.map('map').setView([12.973686337229521, 77.59736308365355], 11);    
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+let marker, circle, zoomed;
+
+navigator.geolocation.watchPosition(success, error);
+
+function success(pos) {
+
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+    const accuracy = pos.coords.accuracy;
+
+    if (marker) {
+        map.removeLayer(marker);
+        map.removeLayer(circle);
+    }
+    // Removes any existing marker and circle (new ones about to be set)
+
+    marker = L.marker([lat, lng]).addTo(map);
+    circle = L.circle([lat, lng], { radius: accuracy }).addTo(map);
+    // Adds marker to the map and a circle for accuracy
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+        .then(response => response.json())
+        .then(data => {
+            const pincode = data.address.postcode;
+            const shortCode = generateShortCode(pincode, lat, lng);
+            const tooltipContent = `<b>Geo-Pincode</b><br>Latitude: ${lat}<br>Longitude: ${lng}<br>Unique Short Code: ${shortCode}`;
+            marker.bindTooltip(tooltipContent).openTooltip();
+        })
+        .catch(error => {
+            const shortCode = generateShortCode("Unknown", lat, lng);
+            const tooltipContent = `<b>Geo-Pincode</b><br>Latitude: ${lat}<br>Longitude: ${lng}<br>Unique Short Code: ${shortCode}`;
+            marker.bindTooltip(tooltipContent).openTooltip();
+        });
+    // Fetches the pincode using reverse geocoding and adds it to the tooltip with formatted content
+
+    if (!zoomed) {
+        zoomed = map.fitBounds(circle.getBounds()); 
+    }
+    // Set zoom to boundaries of accuracy circle
+
+    map.setView([lat, lng]);
+    // Set map focus to current user position
+
+}
+
+function error(err) {
+
+    if (err.code === 1) {
+        alert("Please allow geolocation access");
+    } else {
+        alert("Cannot get current location");
+    }
+
+}
+
+function generateShortCode(pincode, lat, lng) {
+    // Take the last four digits of the latitude and longitude
+    const latStr = lat.toString().split('.').join('').slice(-4);
+    const lngStr = lng.toString().split('.').join('').slice(-4);
+    const shortCode = `${pincode} ${latStr} ${lngStr}`;
+    return shortCode;
+}
+
+</script>
+</html>
