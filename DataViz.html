@@ -1,5 +1,13 @@
 <html>
 <head>
+
+  <!-- image slider
+    -->
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Switcher</title>
+
 <!-- slider code -->
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,10 +178,29 @@ India as in now is 90% dependent on importing semiconductor.
   <img class="Rectangle14" style="width: 32px; height: 32px; left: 1004px; top: 3221px; position: absolute" src="images/Location.png" />
 </div>
 
+<!-- image slider  -->
+
+
+<div style="text-align: center; margin-top: 50px;">
+  <img id="image" src="image 1.png" alt="Image 1" style="max-width: 100%; height: auto; cursor: pointer;">
+</div>
+
+<script>
+  const images = ["image 1.png", "image 2.png"];
+  let currentIndex = 0;
+
+  document.getElementById('image').addEventListener('click', function() {
+      currentIndex = (currentIndex + 1) % images.length;
+      this.src = images[currentIndex];
+  });
+</script>
+
+
 <!-- slider code -->
 <div class="container">
   <h1>Bridging the Talent Gap</h1>
-  <h2>Investment Value in Crores</h2>
+  <h2>Investment Required in Education & Training (in Crores)</h2>
+  
   <input type="range" id="investmentSlider" name="investmentSlider" min="0" max="4" value="0" class="slider">
   <div class="slider-labels">
       <span>0</span>
@@ -235,8 +262,17 @@ India as in now is 90% dependent on importing semiconductor.
   });
 </script>
 <!-- slider code -->
-</body>
 
+
+</body>
+<footer>
+  Thank you!
+
+  Sources:
+  https://www.india-briefing.com/news/indias-semiconductor-sector-welcomes-three-new-manufacturing-units-31434.html/
+  https://www.india-briefing.com/news/indias-semiconductor-sector-welcomes-three-new-manufacturing-units-31434.html/
+  - https://www.statista.com/outlook/tmo/semiconductors/worldwide#revenue
+</footer>
 
 
 </html>
