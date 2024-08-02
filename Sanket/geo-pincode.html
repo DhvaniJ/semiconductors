@@ -15,12 +15,115 @@
         #map { height: 500px; width: 720px; align-items: center;}
         
     </style>
+<!-- slider code -->
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .slider {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .image-container {
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 400px;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -10px;
+        }
+        .slider-labels span {
+            font-size: 12px;
+        }
+    </style>
+<!-- slider code -->
+
+
 
 </head>
 
 <body>
     Map of User Location Bangalore
     <div id="map"></div>
+<!-- slider code -->
+<div class="container">
+    <h1>Investment Images</h1>
+    <h2>Investment Value in Crores</h2>
+    <input type="range" id="investmentSlider" name="investmentSlider" min="0" max="4" value="0" class="slider">
+    <div class="slider-labels">
+        <span>0</span>
+        <span>500</span>
+        <span>1000</span>
+        <span>1500</span>
+        <span>2000</span>
+    </div>
+    <div class="image-container" id="imageContainer"></div>
+</div>
+
+<script>
+    const data = [
+        { investment: 0, img: "0.png" },
+        { investment: 500, img: "500.png" },
+        { investment: 1000, img: "1000.png" },
+        { investment: 1500, img: "1500.png" },
+        { investment: 2000, img: "2000.png" }
+    ];
+
+    const slider = document.getElementById('investmentSlider');
+    const imageContainer = document.getElementById('imageContainer');
+
+    function updateImage(value) {
+        const selectedData = data.find(item => item.investment === parseInt(value));
+        if (selectedData) {
+            const imgElement = document.createElement('img');
+            imgElement.src = selectedData.img;
+            imgElement.alt = `Investment ${selectedData.investment} Crores`;
+            imgElement.style.width = '100%';
+            imgElement.style.maxWidth = '400px';
+
+            imgElement.style.opacity = 0;  // Start with the new image hidden
+            imageContainer.innerHTML = '';
+            imageContainer.appendChild(imgElement);
+
+            setTimeout(() => {
+                imgElement.style.opacity = 1;  // Fade in the new image
+            }, 10);
+        }
+    }
+
+    slider.addEventListener('input', function() {
+        const currentScrollPosition = window.scrollY;
+        updateImage(this.value * 500);  // Adjust value to match investment amounts
+        window.scrollTo(0, currentScrollPosition); // Keep scroll position after image update
+    });
+
+    window.addEventListener('load', function() {
+        const scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, parseInt(scrollPosition));
+        }
+        updateImage(slider.value * 500); // Initialize with default value
+    });
+
+    window.addEventListener('scroll', function() {
+        sessionStorage.setItem('scrollPosition', window.scrollY);
+    });
+</script>
+<!-- slider code -->
+
 
 </body>
 <script>
@@ -95,4 +198,8 @@ function generateShortCode(pincode, lat, lng) {
 }
 
 </script>
+
+
+
+
 </html>

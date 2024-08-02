@@ -1,14 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <h1>Information Visualisation - III </h1>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .image-container, .slider-container {
+            margin-top: 20px;
+        }
+        .image-container img, .slider-container img {
+            width: 100%;
+            max-width: 400px;
+            cursor: pointer;
+        }
+        .slider {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: -10px;
+        }
+        .slider-labels span {
+            font-size: 12px;
+        }
+        .content-container {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
-<h3>Project Works</h3>
-<br>
+    <div class="container">
+        <h1>Investment Images</h1>
+        <div class="image-container" id="imageContainer">
+            <!-- Replace with your first image -->
+            <img src="image 1.png" alt="Image 1" id="img1">
+            <!-- Replace with your second image -->
+            <img src="image 2.png" alt="Image 2" id="img2">
+        </div>
+        <div class="slider-container" id="sliderContainer" style="display: none;">
+            <h2>Investment Value in Crores</h2>
+            <input type="range" id="investmentSlider" name="investmentSlider" min="0" max="4" value="0" class="slider">
+            <div class="slider-labels">
+                <span>0</span>
+                <span>500</span>
+                <span>1000</span>
+                <span>1500</span>
+                <span>2000</span>
+            </div>
+        </div>
+        <div class="content-container" id="contentContainer"></div>
+    </div>
 
-<iframe width="100%" height="1829.046875" frameborder="0" 
-  src="https://observablehq.com/embed/60c4a9abd8ce183d?cells=cards"></iframe>
+    <script>
+        const data = [
+            { investment: 0, img: "0.png" }, // Replace with your image files
+            { investment: 500, img: "500.png" }, // Replace with your image files
+            { investment: 1000, img: "1000.png" }, // Replace with your image files
+            { investment: 1500, img: "1500.png" }, // Replace with your image files
+            { investment: 2000, img: "2000.png" } // Replace with your image files
+        ];
 
+        const img1 = document.getElementById('img1');
+        const img2 = document.getElementById('img2');
+        const imageContainer = document.getElementById('imageContainer');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const slider = document.getElementById('investmentSlider');
+        const contentContainer = document.getElementById('contentContainer');
+        let clickCount = 0;
 
+        img1.addEventListener('click', () => handleImageClick(img1));
+        img2.addEventListener('click', () => handleImageClick(img2));
+
+        function handleImageClick(imgElement) {
+            const imgElementClone = imgElement.cloneNode(true);
+            imgElementClone.style.cursor = 'default';
+
+            contentContainer.appendChild(imgElementClone);
+            contentContainer.style.display = 'block';
+            imgElement.style.display = 'none';
+
+            clickCount++;
+            if (clickCount === 2) {
+                displaySlider();
+            }
+        }
+
+        function displaySlider() {
+            imageContainer.style.display = 'none';
+            sliderContainer.style.display = 'block';
+        }
+
+        function updateImage(value) {
+            const selectedData = data.find(item => item.investment === parseInt(value));
+            if (selectedData) {
+                const imgElement = document.createElement('img');
+                imgElement.src = selectedData.img;
+                imgElement.alt = `Investment ${selectedData.investment} Crores`;
+                imgElement.style.width = '100%';
+                imgElement.style.maxWidth = '400px';
+
+                imgElement.style.opacity = 0;  // Start with the new image hidden
+                contentContainer.innerHTML = '';
+                contentContainer.appendChild(imgElement);
+
+                setTimeout(() => {
+                    imgElement.style.opacity = 1;  // Fade in the new image
+                }, 10);
+            }
+        }
+
+        slider.addEventListener('input', function() {
+            updateImage(this.value * 500);  // Adjust value to match investment amounts
+        });
+
+        window.addEventListener('scroll', function() {
+            sessionStorage.setItem('scrollPosition', window.scrollY);
+        });
+
+        window.addEventListener('load', function() {
+            const scrollPosition = sessionStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                window.scrollTo(0, parseInt(scrollPosition));
+            }
+        });
+    </script>
 </body>
+</html>
+
+<!-- coppaste -->
+<!-- India's Position Section -->
+<div class="section-title" style="left: 128px; top: 4000px; width: 1173px; font-size: 48px;">
+  Where does India stand in the Semiconductor Industry?
+</div>
+
+
+    <!-- Import Dependency Section -->
+    <div class="section-title" style="left: 128px; top: 2738px; width: 1173px; font-size: 48px;">
+      Reducing the Import Dependency
+  </div>
+  <div class="section-subtitle" style="left: 477px; top: 2288px; font-size: 24px;">
+      (graph of import dependency)
+  </div>
+  <div class="section-subtitle" style="left: 128px; top: 2826px; font-size: 32px; font-weight: 700;">
+      India’s semiconductor mission
+  </div>
+  <div class="section-content" style="left: 128px; top: 2882px; font-size: 24px;">
+      Aim: To make India a Global Hub for Semiconductor Manufacturing & Design
+  </div>
+  <br>
+  <!-- Company Investment Section -->
+  <div class="background-box" style="width: 404px; height: 300px; left: 128px; top: 2942px;"></div>
+  <div class="background-box" style="width: 404px; height: 300px; left: 554px; top: 2942px;"></div>
+  <div class="background-box" style="width: 404px; height: 300px; left: 980px; top: 2942px;"></div>
+  <div class="section-content" style="width: 362px; left: 149px; top: 2974px; font-size: 32px;">
+      Tata Electronics Private Limited (TEPL)
+  </div>
+  <div class="section-content" style="width: 362px; left: 575px; top: 2974px; font-size: 32px;">
+      Tata Semiconductor Assembly & Test Pvt Ltd
+  </div>
+  <div class="section-content" style="width: 362px; left: 1001px; top: 2974px; font-size: 32px;">
+      CG Power’s OSAT
+  </div>
+  <div class="investment-info" style="width: 301px; left: 199px; top: 3086px; font-size: 24px;">
+      Investment: Rs. 91,000 cr
+  </div>
+  <div class="investment-info" style="width: 301px; left: 625px; top: 3086px; font-size: 24px;">
+      Investment: Rs. 27,000 cr
+  </div>
+  <div class="investment-info" style="width: 301px; left: 1051px; top: 3086px; font-size: 24px;">
+      Investment: Rs. 7,600 cr
+  </div>
+  <div class="investment-info" style="width: 301px; left: 199px; top: 3130px; font-size: 24px;">
+      Capacity: 50,000 (WSPM)
+  </div>
+  <div class="investment-info" style="width: 312px; left: 625px; top: 3130px; font-size: 24px;">
+      Capacity: 48 million chips/day
+  </div>
+  <div class="investment-info" style="width: 312px; left: 1051px; top: 3130px; font-size: 24px;">
+      Capacity: 15 million chips/day
+  </div>
+  <div class="investment-info" style="width: 301px; left: 199px; top: 3174px; font-size: 24px;">
+      Dholera, Gujarat
+  </div>
+  <div class="investment-info" style="width: 301px; left: 625px; top: 3174px; font-size: 24px; font-weight: 500;">
+      Morigaon, Assam
+  </div>
+  <div class="investment-info" style="width: 301px; left: 1051px; top: 3174px; font-size: 24px; font-weight: 500;">
+      Sanand, Gujarat
+  </div>
+  <!-- Investment Summary Section -->
+  <div class="section-content" style="width: 1138px; left: 165px; top: 4611px; font-size: 24px;">
+      So, based on the existing investment data, the total investment required for training the necessary high-tech labor force in India would be ₹2,000 crore.
+  </div>
+  <!-- Icons -->
+  <img class="img-icon" src="images/Rupee.png" style="width: 32px; height: 32px; left: 149px; top: 3088px;" />
+  <img class="img-icon" src="images/Rupee.png" style="width: 32px; height: 32px; left: 575px; top: 3088px;" />
+  <img class="img-icon" src="images/Rupee.png" style="width: 32px; height: 32px; left: 1001px; top: 3088px;" />
+  <img class="img-icon" src="images/Processor.png" style="width: 32px; height: 32px; left: 149px; top: 3132px;" />
+  <img class="img-icon" src="images/Processor.png" style="width: 32px; height: 32px; left: 575px; top: 3132px;" />
+  <img class="img-icon" src="images/Processor.png" style="width: 32px; height: 32px; left: 1001px; top: 3132px;" />
+  <img class="img-icon" src="images/Location.png" style="width: 32px; height: 32px; left: 149px; top: 3176px;" />
+  <img class="img-icon" src="images/Location.png" style="width: 32px; height: 32px; left: 575px; top: 3176px;" />
+  <img class="img-icon" src="images/Location.png" style="width: 32px; height: 32px; left: 1001px; top: 3176px;" />
+</div>
